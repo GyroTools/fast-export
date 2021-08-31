@@ -232,6 +232,10 @@ def export_file_contents(ctx,manifest,files,hgtags,encoding='',plugins={}):
       filename=file_data['filename']
       file_ctx=file_data['file_ctx']
 
+      if not filename or not file_ctx:
+        stderr_buffer.write(b'Skip %s\n' % file)
+        continue
+
     wr(b'M %s inline %s' % (gitmode(manifest.flags(file)),
                            strip_leading_slash(filename)))
     wr(b'data %d' % len(d)) # had some trouble with size()
